@@ -1,10 +1,10 @@
 import { Outlet } from "react-router-dom";
-import BottomNav from "./BottomNav";
+import TopNav from "./TopNav";
 
 const Layout = () => (
-  <div className="min-h-screen bg-background pb-20">
+  <div className="min-h-screen bg-background">
+    <TopNav />
     <Outlet />
-    <BottomNav />
   </div>
 );
 

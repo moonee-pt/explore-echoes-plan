@@ -17,87 +17,106 @@ const statusColors: Record<string, string> = {
   "规划中": "bg-secondary text-secondary-foreground",
 };
 
+const recommendations = [
+  { image: dest1, title: "东南亚风情", desc: "热带风光与异域文化的完美邂逅" },
+  { image: dest2, title: "万里长城", desc: "感受千年文明的磅礴壮阔" },
+  { image: dest3, title: "九寨沟", desc: "人间仙境，绝美的自然调色盘" },
+];
+
 const Index = () => {
   return (
-    <div className="min-h-screen">
+    <div>
       {/* Hero */}
-      <div className="relative h-64 overflow-hidden">
+      <div className="relative h-[420px] overflow-hidden">
         <img src={heroImg} alt="旅行风景" className="w-full h-full object-cover" />
-        <div className="absolute inset-0 bg-gradient-to-t from-background via-background/30 to-transparent" />
-        <div className="absolute bottom-6 left-5 right-5">
-          <motion.h1
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="text-2xl font-bold font-display text-foreground"
-          >
-            探索世界的美好
-          </motion.h1>
-          <p className="text-sm text-muted-foreground mt-1">规划你的下一段旅程</p>
+        <div className="absolute inset-0 bg-gradient-to-r from-background/90 via-background/50 to-transparent" />
+        <div className="absolute inset-0 flex items-center">
+          <div className="container max-w-6xl mx-auto px-6">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+              className="max-w-lg"
+            >
+              <h1 className="text-4xl font-bold font-display leading-tight">
+                探索世界的美好
+              </h1>
+              <p className="text-lg text-muted-foreground mt-3">
+                规划你的下一段旅程，发现未知的精彩
+              </p>
+              <motion.button
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                className="mt-6 flex items-center gap-2 rounded-lg bg-primary text-primary-foreground px-6 py-3 font-medium text-sm shadow-lg hover:shadow-xl transition-shadow"
+              >
+                <Plus className="w-4 h-4" />
+                创建新行程
+              </motion.button>
+            </motion.div>
+          </div>
         </div>
       </div>
 
-      {/* Quick Actions */}
-      <div className="px-5 -mt-2 relative z-10">
-        <motion.button
-          whileTap={{ scale: 0.97 }}
-          className="w-full flex items-center justify-center gap-2 rounded-lg bg-primary text-primary-foreground py-3 font-medium text-sm shadow-lg"
-        >
-          <Plus className="w-4 h-4" />
-          创建新行程
-        </motion.button>
-      </div>
-
-      {/* Trips */}
-      <div className="px-5 mt-6">
-        <div className="flex items-center justify-between mb-4">
-          <h2 className="text-lg font-display font-semibold">我的行程</h2>
-          <button className="text-xs text-muted-foreground flex items-center gap-0.5">
-            查看全部 <ChevronRight className="w-3 h-3" />
+      <div className="container max-w-6xl mx-auto px-6 py-10">
+        {/* Trips */}
+        <div className="flex items-center justify-between mb-6">
+          <h2 className="text-2xl font-display font-semibold">我的行程</h2>
+          <button className="text-sm text-muted-foreground hover:text-foreground flex items-center gap-1 transition-colors">
+            查看全部 <ChevronRight className="w-4 h-4" />
           </button>
         </div>
-        <div className="space-y-3">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
           {trips.map((trip, i) => (
             <motion.div
               key={trip.id}
-              initial={{ opacity: 0, y: 12 }}
+              initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: i * 0.1 }}
-              className="flex gap-3 rounded-lg bg-card p-3 shadow-sm border border-border/50 cursor-pointer active:scale-[0.98] transition-transform"
+              whileHover={{ y: -4 }}
+              className="rounded-xl bg-card border border-border/50 overflow-hidden shadow-sm hover:shadow-md transition-all cursor-pointer group"
             >
-              <img src={trip.image} alt={trip.title} className="w-20 h-20 rounded-md object-cover flex-shrink-0" />
-              <div className="flex-1 min-w-0">
-                <div className="flex items-start justify-between gap-2">
-                  <h3 className="font-medium text-sm truncate">{trip.title}</h3>
-                  <span className={`text-[10px] px-2 py-0.5 rounded-full flex-shrink-0 ${statusColors[trip.status]}`}>
-                    {trip.status}
-                  </span>
-                </div>
-                <div className="flex items-center gap-3 mt-2 text-xs text-muted-foreground">
-                  <span className="flex items-center gap-1"><Calendar className="w-3 h-3" />{trip.days}</span>
-                  <span className="flex items-center gap-1"><MapPin className="w-3 h-3" />{trip.date}</span>
+              <div className="relative h-44 overflow-hidden">
+                <img
+                  src={trip.image}
+                  alt={trip.title}
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                />
+                <span className={`absolute top-3 right-3 text-xs px-3 py-1 rounded-full ${statusColors[trip.status]}`}>
+                  {trip.status}
+                </span>
+              </div>
+              <div className="p-4">
+                <h3 className="font-display font-semibold">{trip.title}</h3>
+                <div className="flex items-center gap-4 mt-2 text-sm text-muted-foreground">
+                  <span className="flex items-center gap-1"><Calendar className="w-3.5 h-3.5" />{trip.days}</span>
+                  <span className="flex items-center gap-1"><MapPin className="w-3.5 h-3.5" />{trip.date}</span>
                 </div>
               </div>
             </motion.div>
           ))}
         </div>
-      </div>
 
-      {/* Recommendations */}
-      <div className="px-5 mt-8 mb-4">
-        <h2 className="text-lg font-display font-semibold mb-4">热门推荐</h2>
-        <div className="flex gap-3 overflow-x-auto pb-2 -mx-5 px-5 scrollbar-hide">
-          {[dest1, dest2, dest3].map((img, i) => (
+        {/* Recommendations */}
+        <h2 className="text-2xl font-display font-semibold mt-14 mb-6">热门推荐</h2>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+          {recommendations.map((rec, i) => (
             <motion.div
               key={i}
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3 + i * 0.1 }}
               whileHover={{ y: -4 }}
-              className="relative flex-shrink-0 w-36 h-48 rounded-xl overflow-hidden shadow-md cursor-pointer"
+              className="relative h-64 rounded-xl overflow-hidden shadow-md cursor-pointer group"
             >
-              <img src={img} alt="" className="w-full h-full object-cover" />
-              <div className="absolute inset-0 bg-gradient-to-t from-foreground/60 to-transparent" />
-              <div className="absolute bottom-3 left-3 right-3">
-                <p className="text-xs font-medium text-card">
-                  {["东南亚风情", "万里长城", "九寨沟"][i]}
-                </p>
+              <img
+                src={rec.image}
+                alt={rec.title}
+                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-foreground/70 via-foreground/10 to-transparent" />
+              <div className="absolute bottom-5 left-5 right-5">
+                <h3 className="text-lg font-display font-semibold text-card">{rec.title}</h3>
+                <p className="text-sm text-card/80 mt-1">{rec.desc}</p>
               </div>
             </motion.div>
           ))}
